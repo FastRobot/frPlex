@@ -55,6 +55,7 @@ end
 package 'docker-engine'
 
 docker_service_manager 'default' do
+  storage_driver 'zfs'
   action :start
 end
 
@@ -83,6 +84,9 @@ docker_container 'plex' do
 end
 
 # monitor it
+docker_image 'google/cadvisor'
+docker_image 'prom/node-exporter'
+
 docker_container 'cadvisor' do
   repo 'google/cadvisor'
   restart_policy 'always'
@@ -94,6 +98,13 @@ docker_container 'cadvisor' do
     /sys:/sys:ro
     /var/lib/docker/:/var/lib/docker:ro
     )
+end
+
+docker_container 'node-exporter' do
+  repo 'prom/node-exporter'
+  port '9100:9100'
+  restart_policy 'always'
+  network_mode 'host'
 end
 
 # plexpy
