@@ -11,10 +11,22 @@ package 'nfs-common'
 directory '/media'
 
 mount '/media' do
-  device 'nas.henry.st:/mnt/int/Media'
+  device node['frPlex']['media']['nfs']
   fstype 'nfs'
   options 'ro'
   action [:mount, :enable]
+end
+
+directory '/etc/systemd/system/docker.service.d' do
+  recursive true
+end
+
+cookbook_file '/etc/systemd/system/docker.service.d/remote-fs.conf' do
+  notifies :run, 'execute[systemctl daemon-reload]'
+end
+
+execute 'systemctl daemon-reload' do
+  action :nothing
 end
 
 # setup zfs
@@ -80,7 +92,8 @@ docker_container 'plex' do
            /media/Movies:/data/movies
            /media/TV:/data/tvshows
            /media/HomeMovies:/data/homemovies
-           /media/Music:/data/music)
+           /media/Music:/data/music
+           /media/Cartoons:/data/cartoons)
 end
 
 # monitor it
@@ -111,3 +124,9 @@ end
 
 # backup of important stuff
 # https://github.com/biola/chef-zfs_linux has some neat zfs snapshot routines
+
+# general auto-zfs snapshot scripts would be fine
+# hidden directory under /var/lib/docker/.zfs/ has snapshots/
+# /var/lib/docker/.zfs/snapshot/20160925/volumes/plex-config/_data
+
+# root@docker1 /v/l/d/.z/s/2/v/p/_data# rsync -a --progress --exclude=Cache/ Library user@somewhere:tmp/
