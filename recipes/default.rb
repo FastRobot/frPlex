@@ -81,14 +81,18 @@ docker_volume 'plex-transcode' do
   action :create
 end
 
-docker_image 'linuxserver/plex'
+docker_image 'plexinc/pms-docker' do
+  tag 'plexpass'
+end
 
 docker_container 'plex' do
-  repo 'linuxserver/plex'
+  repo 'plexinc/pms-docker'
+  tag 'plexpass'
   env ['VERSION=latest', 'PUID=1023', 'PGID=1023']
   restart_policy 'always'
   network_mode 'host'
   volumes %w(plex-config:/config
+           plex-transcode:/transcode
            /media/Movies:/data/movies
            /media/TV:/data/tvshows
            /media/HomeMovies:/data/homemovies
@@ -130,3 +134,4 @@ end
 # /var/lib/docker/.zfs/snapshot/20160925/volumes/plex-config/_data
 
 # root@docker1 /v/l/d/.z/s/2/v/p/_data# rsync -a --progress --exclude=Cache/ Library user@somewhere:tmp/
+
