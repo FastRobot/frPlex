@@ -117,12 +117,8 @@ docker_container 'cadvisor' do
     )
 end
 
-docker_container 'node-exporter' do
-  repo 'prom/node-exporter'
-  port '9100:9100'
-  restart_policy 'always'
-  network_mode 'host'
-end
+
+
 
 # plexpy
 
