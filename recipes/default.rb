@@ -2,7 +2,6 @@
 # Cookbook Name:: frPlex
 # Recipe:: default
 #
-# Copyright (c) 2016 Lamont Lucas, All Rights Reserved.
 
 # setup nfs
 
