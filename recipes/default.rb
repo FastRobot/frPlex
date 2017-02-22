@@ -12,7 +12,7 @@ directory '/media'
 mount '/media' do
   device node['frPlex']['media']['nfs']
   fstype 'nfs'
-  options 'ro'
+  options 'rw'
   action [:mount, :enable]
 end
 
