@@ -87,7 +87,7 @@ end
 docker_container 'plex' do
   repo 'plexinc/pms-docker'
   tag 'plexpass'
-  env ['VERSION=latest', 'PUID=1023', 'PGID=1023']
+  env ['VERSION=latest', 'PLEX_UID=1023', 'PLEX_GID=1023']
   restart_policy 'always'
   network_mode 'host'
   volumes %w(plex-config:/config

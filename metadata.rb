@@ -4,6 +4,6 @@ maintainer_email 'lamont@fastrobot.com'
 license 'all_rights'
 description 'Installs/Configures frPlex'
 long_description 'Installs/Configures frPlex'
-version '0.2.1'
+version '0.2.2'
 
 depends 'docker', '~> 2.0'
