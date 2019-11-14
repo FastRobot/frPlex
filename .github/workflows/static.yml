@@ -1,4 +1,4 @@
-name: Static Tests
+name: StaticTests
 
 on: [push]
 
