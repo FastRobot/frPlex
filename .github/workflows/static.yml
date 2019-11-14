@@ -1,4 +1,4 @@
-name: CI
+name: Static Tests
 
 on: [push]
 
@@ -9,6 +9,10 @@ jobs:
 
     steps:
     - uses: actions/checkout@v1
+    - name: cookstyle
+      run: chef exec cookstyle
+    - name: foodcritic
+      run: chef exec foodcritic .
     - name: rspec
       run: chef exec rspec
       

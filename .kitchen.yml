@@ -1,15 +1,20 @@
 ---
 driver:
-  name: docker
-  use_sudo: false
+  name: vagrant
+#  use_sudo: false
+#  run_command: /bin/systemd
+#  cap_add:
+#    - SYS_ADMIN
+#  volume:
+#    - /sys/fs/cgroup
 
 provisioner:
   name: chef_zero
 
 # Uncomment the following verifier to leverage Inspec instead of Busser (the
 # default verifier)
-# verifier:
-#   name: inspec
+verifier:
+ name: inspec
 
 platforms:
   - name: ubuntu-16.04
@@ -19,3 +24,5 @@ suites:
     run_list:
       - recipe[frPlex::default]
     attributes:
+      frPlex:
+        mount_nfs: false

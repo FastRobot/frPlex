@@ -9,12 +9,13 @@ package 'nfs-common'
 
 directory '/media'
 
-mount '/media' do
-  device node['frPlex']['media']['nfs']
-  fstype 'nfs'
-  options 'rw'
-  action [:mount, :enable]
-end
+# mount '/media' do
+#   device node['frPlex']['media']['nfs']
+#   fstype 'nfs'
+#   options 'rw'
+#   action [:mount, :enable]
+#   only_if node['frPlex']['mount_nfs']
+# end
 
 directory '/etc/systemd/system/docker.service.d' do
   recursive true
@@ -30,18 +31,18 @@ end
 
 # setup zfs
 
-package 'zfsutils-linux'
-# I manually ran build@docker1:~$ sudo zpool create tank vdb vdc -f
-
-execute 'zpool create tank vdb vdc -f' do
-  not_if "zpool list | grep tank"
-end
-
-execute 'zfs create -o mountpoint=/var/lib/docker tank/docker' do
-  returns [0]
-  action :run
-  not_if "zfs list | grep docker"
-end
+# package 'zfsutils-linux'
+# # I manually ran build@docker1:~$ sudo zpool create tank vdb vdc -f
+#
+# execute 'zpool create tank vdb vdc -f' do
+#   not_if "zpool list | grep tank"
+# end
+#
+# execute 'zfs create -o mountpoint=/var/lib/docker tank/docker' do
+#   returns [0]
+#   action :run
+#   not_if "zfs list | grep docker"
+# end
 
 
 # configure docker
@@ -63,10 +64,10 @@ execute 'apt refresh' do
   action :nothing
 end
 
-package 'docker-engine'
+package 'docker-ce'
 
 docker_service_manager 'default' do
-  storage_driver 'zfs'
+  # storage_driver 'zfs'
   action :start
 end
 
@@ -101,7 +102,6 @@ end
 
 # monitor it
 docker_image 'google/cadvisor'
-docker_image 'prom/node-exporter'
 
 docker_container 'cadvisor' do
   repo 'google/cadvisor'
