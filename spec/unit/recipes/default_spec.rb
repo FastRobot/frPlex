@@ -8,7 +8,7 @@ require 'spec_helper'
 
 describe 'frPlex::default' do
   before do
-    stub_command("apt-key list | grep releasedocker").and_return(false)
+    stub_command('apt-key list | grep releasedocker').and_return(false)
   end
   context 'When all attributes are default, on an unspecified platform' do
     let(:chef_run) do
