@@ -44,14 +44,13 @@ end
 #   not_if "zfs list | grep docker"
 # end
 
-
 # configure docker
 package %w(apt-transport-https ca-certificates tmux)
 
 execute 'add docker repo keys' do
   command 'apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys 58118E89F3A912897C070ADBF76221572C52609D'
   action :run
-  not_if "apt-key list | grep releasedocker"
+  not_if 'apt-key list | grep releasedocker'
 end
 
 file '/etc/apt/sources.list.d/docker.list' do
@@ -92,12 +91,12 @@ docker_container 'plex' do
   restart_policy 'always'
   network_mode 'host'
   volumes %w(plex-config:/config
-           plex-transcode:/transcode
-           /media/Movies:/data/movies
-           /media/TV:/data/tvshows
-           /media/HomeMovies:/data/homemovies
-           /media/Music:/data/music
-           /media/Cartoons:/data/cartoons)
+             plex-transcode:/transcode
+             /media/Movies:/data/movies
+             /media/TV:/data/tvshows
+             /media/HomeMovies:/data/homemovies
+             /media/Music:/data/music
+             /media/Cartoons:/data/cartoons)
 end
 
 # monitor it
@@ -113,11 +112,8 @@ docker_container 'cadvisor' do
     /var/run:/var/run:rw
     /sys:/sys:ro
     /var/lib/docker/:/var/lib/docker:ro
-    )
+  )
 end
-
-
-
 
 # plexpy
 
@@ -129,4 +125,3 @@ end
 # /var/lib/docker/.zfs/snapshot/20160925/volumes/plex-config/_data
 
 # root@docker1 /v/l/d/.z/s/2/v/p/_data# rsync -a --progress --exclude=Cache/ Library user@somewhere:tmp/
-
