@@ -1,0 +1,14 @@
+name: CI
+
+on: [push]
+
+jobs:
+  build:
+
+    container: chef/chefdk:3
+
+    steps:
+    - uses: actions/checkout@v1
+    - name: rspec
+      run: chef exec rspec
+      
