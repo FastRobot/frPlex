@@ -4,7 +4,7 @@ on: [push]
 
 jobs:
   build:
-
+    runs-on: ubuntu-latest
     container: chef/chefdk:3
 
     steps:
