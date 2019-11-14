@@ -7,9 +7,12 @@
 require 'spec_helper'
 
 describe 'frPlex::default' do
+  before do
+    stub_command("apt-key list | grep releasedocker").and_return(false)
+  end
   context 'When all attributes are default, on an unspecified platform' do
     let(:chef_run) do
-      runner = ChefSpec::ServerRunner.new
+      runner = ChefSpec::ServerRunner.new(platform: 'ubuntu', version: '16.04')
       runner.converge(described_recipe)
     end
 
