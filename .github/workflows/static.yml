@@ -5,14 +5,12 @@ on: [push]
 jobs:
   build:
     runs-on: ubuntu-latest
-    container: chef/chefdk:3
-
+    container:
+      image: chef/chefdk@3
     steps:
     - uses: actions/checkout@v1
-    - name: cookstyle
-      run: chef exec cookstyle
-    - name: foodcritic
-      run: chef exec foodcritic .
+    - name: lint
+      uses: fastrobot/chef-cookbook-static-action@v0.1.1
     - name: rspec
       run: chef exec rspec
       
