@@ -6,7 +6,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     container:
-      image: chef/chefdk@3
+      image: chef/chefdk:3
     steps:
     - uses: actions/checkout@v1
     - name: lint
