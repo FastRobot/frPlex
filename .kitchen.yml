@@ -26,3 +26,4 @@ suites:
     attributes:
       frPlex:
         mount_nfs: false
+        manage_zfs: false
