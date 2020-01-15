@@ -14,7 +14,7 @@ mount '/media' do
   fstype 'nfs'
   options 'rw'
   action [:mount, :enable]
-  only_if node['frPlex']['mount_nfs']
+  only_if { node['frPlex']['mount_nfs'] }
 end
 
 directory '/etc/systemd/system/docker.service.d' do
@@ -36,14 +36,14 @@ package 'zfsutils-linux'
 
 execute 'zpool create tank vdb vdc -f' do
   not_if 'zpool list | grep tank'
-  only_if node['frPlex']['manage_zfs']
+  only_if { node['frPlex']['manage_zfs'] }
 end
 
 execute 'zfs create -o mountpoint=/var/lib/docker tank/docker' do
   returns [0]
   action :run
   not_if 'zfs list | grep docker'
-  only_if node['frPlex']['manage_zfs']
+  only_if { node['frPlex']['manage_zfs'] }
 end
 
 # configure docker
@@ -52,7 +52,7 @@ package %w(apt-transport-https ca-certificates tmux)
 execute 'add docker repo keys' do
   command 'apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys 58118E89F3A912897C070ADBF76221572C52609D'
   action :run
-  not_if 'apt-key list | grep releasedocker'
+    not_if 'apt-key list | grep releasedocker'
 end
 
 file '/etc/apt/sources.list.d/docker.list' do
