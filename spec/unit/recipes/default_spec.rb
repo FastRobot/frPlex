@@ -17,6 +17,9 @@ describe 'frPlex::default' do
     end
 
     it 'converges successfully' do
+      stub_command('zpool list | grep tank').and_return(true)
+      stub_command('zfs list | grep docker').and_return(true)
+      stub_command('apt-key list | grep releasedocker').and_return(true)
       expect { chef_run }.to_not raise_error
     end
   end

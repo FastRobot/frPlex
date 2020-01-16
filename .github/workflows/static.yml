@@ -1,6 +1,7 @@
 name: StaticTests
 
-on: [push]
+on:
+  - pull_request
 
 jobs:
   build:
@@ -8,9 +9,9 @@ jobs:
     container:
       image: chef/chefdk:3
     steps:
-    - uses: actions/checkout@v1
+    - name: checkout
+      uses: actions/checkout@v1
     - name: lint
-      uses: fastrobot/chef-cookbook-static-action@v0.1.4
-    - name: rspec
-      run: chef exec rspec
-      
+      uses: FastRobot/chef-cookbook-action@master
+      with:
+        chef_actions_task: 'lint'
