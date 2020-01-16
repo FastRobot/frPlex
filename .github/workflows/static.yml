@@ -10,7 +10,6 @@ jobs:
     steps:
     - uses: actions/checkout@v1
     - name: lint
-      uses: fastrobot/chef-cookbook-static-action@v0.1.4
-    - name: rspec
-      run: chef exec rspec
-      
+      uses: fastrobot/chef-cookbook-action@v0.3.0
+      with:
+        chef_actions_task: 'lint'
