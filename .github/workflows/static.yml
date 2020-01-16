@@ -12,6 +12,6 @@ jobs:
     - name: checkout
       uses: actions/checkout@v1
     - name: lint
-      uses: FastRobot/chef-cookbook-action
+      uses: FastRobot/chef-cookbook-action@master
       with:
         chef_actions_task: 'lint'
