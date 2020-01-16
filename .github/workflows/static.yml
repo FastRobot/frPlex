@@ -8,8 +8,9 @@ jobs:
     container:
       image: chef/chefdk:3
     steps:
-    - uses: actions/checkout@v1
+    - name: checkout
+      uses: actions/checkout@v1
     - name: lint
-      uses: fastrobot/chef-cookbook-action@v0.3.0
+      uses: FastRobot/chef-cookbook-action@v0.3.0
       with:
         chef_actions_task: 'lint'
