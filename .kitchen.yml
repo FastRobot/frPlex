@@ -1,6 +1,6 @@
 ---
 driver:
-  name: vagrant
+  name: docker
 #  use_sudo: false
 #  run_command: /bin/systemd
 #  cap_add:
