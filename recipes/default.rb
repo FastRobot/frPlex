@@ -35,14 +35,14 @@ package 'zfsutils-linux'
 # I manually ran build@docker1:~$ sudo zpool create tank vdb vdc -f
 
 execute 'zpool create tank vdb vdc -f' do
-  not_if 'zpool list | grep tank'
+  not_if '/sbin/zpool list | grep tank'
   only_if { node['frPlex']['manage_zfs'] }
 end
 
 execute 'zfs create -o mountpoint=/var/lib/docker tank/docker' do
   returns [0]
   action :run
-  not_if 'zfs list | grep docker'
+  not_if '/sbin/zfs list | grep docker'
   only_if { node['frPlex']['manage_zfs'] }
 end
 
