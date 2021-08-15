@@ -34,8 +34,8 @@ end
 package 'zfsutils-linux'
 # I manually ran build@docker1:~$ sudo zpool create tank vdb vdc -f
 
-execute 'zpool create tank vdb vdc -f' do
-  not_if 'zpool list | grep tank'
+execute '/sbin/zpool create tank vdb vdc -f' do
+  not_if '/sbin/zpool list | grep tank'
   only_if { node['frPlex']['manage_zfs'] }
 end
 
@@ -70,10 +70,15 @@ docker_image 'plexinc/pms-docker' do
   tag 'plexpass'
 end
 
+plex_env = %w[VERSION=latest PLEX_UID=1023 PLEX_GID=1023]
+if node['frPlex']['plex_claim']
+  plex_env << "PLEX_CLAIM=#{node['frPlex']['plex_claim']}"
+end
+
 docker_container 'plex' do
   repo 'plexinc/pms-docker'
   tag 'plexpass'
-  env ['VERSION=latest', 'PLEX_UID=1023', 'PLEX_GID=1023']
+  env plex_env
   restart_policy 'always'
   network_mode 'host'
   volumes %w(plex-config:/config

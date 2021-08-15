@@ -9,6 +9,6 @@ long_description 'Installs/Configures frPlex'
 chef_version '>= 13.0'
 supports 'ubuntu', '>= 16.04'
 
-version '0.3.0'
+version '0.3.2'
 
 depends 'docker', '~> 5.0'
